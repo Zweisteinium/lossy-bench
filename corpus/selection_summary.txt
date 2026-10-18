@@ -1,0 +1,31 @@
+library 5092, eligible 5087, A 2500, B 200, bait 150, processed 108
+subtiers library: [('1', 278), ('2_altered', 9), ('2_fade', 8), ('2_proven', 124), ('3', 3406), ('4', 1267)]
+subtiers A: [('1', 270), ('2_altered', 9), ('2_fade', 8), ('2_proven', 124), ('3', 2089)]
+subtiers B: [('1', 148), ('2_altered', 8), ('2_proven', 4), ('3', 40)]
+subtiers bait: [('1', 140), ('2_proven', 10)]
+subtiers processed: [('1', 79), ('2_altered', 6), ('2_proven', 2), ('3', 21)]
+excluded: [('samples differ', 2), ('8 channels', 1), ('damaged FLAC (18 decoding errors', 1), ('shorter than 20 s (too short for the detectors)', 1)]
+unverified in A: 0
+strata (library / A / B / bait / processed):
+  bits24                       713   353    35    28    16
+  bits24_fade                    9     9     8     0     6
+  era_1990s                    137   112    15     6    11
+  era_2000s                    350   171    17    16    12
+  era_2010s                   1947   943    51    40    26
+  era_2020s                   2493  1146    99    83    46
+  era_pre1990                  158   128    18     5    13
+  era_unknown                    7     0     0     0     0
+  genre_classical_acoustic     160   143    12    11     9
+  genre_electronic            1912   875    36    22    18
+  genre_hiphop                 536   258    14    11    10
+  genre_pop                    333   192    17    15    10
+  genre_rock_metal             214   122    16     6    11
+  genre_unknown               1937   910   105    85    50
+  live                          20    14     8     1     6
+  old_master                   295   240    33    11    24
+  rate48000                    149    89    11     0     0
+  remaster                      44    27     9     2     7
+  short                        154    97    10    11     7
+  vinyl                         43    34     8     2     6
+spectrum-marked: {'A': 47, 'B': 4, 'bait': 2, 'processed': 2}
+max per artist: A 8 B 3 bait 3

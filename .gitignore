@@ -1,0 +1,16 @@
+# Audio and other local-only material
+private/
+scratch/
+results/STOP
+
+# Third-party tools and binaries (versions and commits in docs/methods.md)
+tools/
+bin/
+.crates.toml
+.crates2.json
+
+# Rendered images (regenerable with scripts/spectrograms.py)
+results/analysis/spectrograms/
+
+__pycache__/
+*.pyc
