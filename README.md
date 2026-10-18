@@ -13,11 +13,37 @@ Detectors under test:
 
 ## Results
 
-| | spectrum | lossprint (p ≥ 0.5) | flaccheck |
+**In one sentence: lossprint is the clear winner. It caught all 3,564 transcodes and almost never flagged genuine
+audio (0–1.4% of resampled files). Echolot's spectrum check caught 42% and flaccheck 52%, and both flag genuine
+audio behind a resampler edge most of the time (69% and 90%).**
+
+![Detection against false alarms per detector](docs/figures/scorecard.svg)
+
+| | spectrum | lossprint | flaccheck |
 |---|---|---|---|
-| Recall, transcodes of 44.1 kHz sources (18 encodings, 2 processed variants) | 42% | **100%** (3,564 / 3,564) | 52% |
-| Flags on bait: genuine audio resampled through 32 / 38 / 40 kHz | 100% / 100% / 6.4% | 1.4% / 0.7% / 0% | 90% / 88% / 92% |
-| Flags on 2,381 unmarked originals without a YouTube URL in their tags | 0% (by construction, see below) | 3.7% (upper bound) | 11.9% |
+| **Lossy files detected** (higher is better) | | | |
+| MP3 128 / 192 (362 files) | 90% | **100%** | 79% |
+| MP3 320 (370) | 74% | **100%** | 78% |
+| MP3 VBR: V2, V0 (551) | 26% | **100%** | 35% |
+| AAC 128 / 256 (752) | 62% | **100%** | 61% |
+| Vorbis q3 to q9 (756) | 17% | **100%** | 29% |
+| Opus 96 / 160 (567) | 5.1% | **100%** | 44% |
+| MP3 320, then gain or upsampled to 48 kHz (206) | 67% | **100%** | 83% |
+| **All transcodes of 44.1 kHz sources (3,564)** | **42%** | **100%** | **52%** |
+| Opus 160 at 48 kHz (32) | 6.2% | **100%** | 44% |
+| **Genuine audio flagged as lossy** (lower is better) | | | |
+| Original FLACs (2,381) | 0%, by construction | 3.7%, upper bound | 12% |
+| Genuine, resampled through 32 kHz (141) | 100% | 1.4% | 90% |
+| Genuine, resampled through 38 kHz (141) | 100% | 0.7% | 88% |
+| Genuine, resampled through 40 kHz (141) | 6.4% | 0% | 92% |
+| Genuine 48 kHz with a steep 20 kHz edge (32) | 6.2% | 0% | 88% |
+
+The transcodes come from 18 encoder settings: ffmpeg plus the standalone encoders lame, fdkaac, opusenc and
+oggenc. lossprint flags at p ≥ 0.5, flaccheck flags on `TRANSCODED`.
+
+![Transcodes detected per encoder group](docs/figures/detection.svg)
+
+![Genuine audio flagged as lossy](docs/figures/false-alarms.svg)
 
 - **spectrum's 0% on the originals proves nothing.** The library's lossy marks came from spectrum itself. The
   unmarked originals are therefore exactly the files spectrum calls clean, and 0 false positives is a consistency
@@ -26,12 +52,17 @@ Detectors under test:
 - **spectrum** misses everything that leaves no edge below ~19.5 kHz: MP3 V0, AAC 256 (ffmpeg), Vorbis q6+ and Opus.
 - **lossprint** caught every transcode, including those from the standalone encoders lame, fdkaac, opusenc and
   oggenc. Its lowest score on a transcode was 0.703, and 99.7% scored ≥ 0.9. Its flags on originals are an upper
-  bound: many are real fakes, such as Opus rips at 48 kHz carrying a YouTube URL in their tags.
+  bound: many are real fakes, such as Opus rips at 48 kHz carrying a YouTube URL in their tags. Its scores are
+  almost never in between, so the exact threshold hardly matters:
+
+  ![lossprint scores of originals and transcodes](docs/figures/lossprint-scores.svg)
 - **flaccheck** is not usable: it flags ordinary CD-master edges and 90% of the bait.
 - **Clipping hides encoder edges.** Decoding a loud lossy file clips, and the distortion fills the empty band above
   the encoder's edge. Measuring spectrum without the clipped frames lifts recall from 72% to 87% on MP3 320, from 58%
   to 95% on MP3 V2 and from 70% to 100% on AAC 128. It adds 1.4% new flags on originals, and 0.4% are not confirmed
   by lossprint.
+
+  ![spectrum with and without clipped frames](docs/figures/clipfree.svg)
 - **Lowering `TRACES_FROM` from 19 to 18 kHz** cuts spectrum's flags on the bait and the 48 kHz control from 64% to
   35% at identical recall. Both held-out halves agree.
 - **Lossy masters exist.** Of 10 songs captured bit-exact from Spotify Lossless (9 disputed, 1 control), 8 have
@@ -52,6 +83,7 @@ All numbers with n and Wilson 95% intervals: [docs/results.md](docs/results.md).
 | [docs/methods.md](docs/methods.md) | Detectors, corpus and trust tiers, transcodes, guards, statistics |
 | [docs/reproducing.md](docs/reproducing.md) | Re-analysis from the published data; re-measurement on another library |
 | [docs/data.md](docs/data.md) | Data dictionary of every file in `corpus/` and `results/`, with checksums |
+| `docs/figures/` | The charts, made by `scripts/figures.py` from the analysis output |
 | [TOOLS.md](TOOLS.md) | Setup, invocation and output formats of lossprint and flaccheck |
 | [report/](report/) | Groundwork for a written report |
 | `scripts/` | Measurement, analysis, experiments and independent verification (`scripts/verify/`) |

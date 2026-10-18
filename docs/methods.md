@@ -234,6 +234,9 @@ qobuz|tidal|deezer|bandcamp|beatport|amazon|apple music|itunes|7digital|junodown
 
 in the tags `url`, `purl`, `www`, `comment`, `description`, `encoder`, `encoded_by`, `encodedby`, `copyright`; plus a
 FLAC vendor string that matches (case-insensitive) one of six store-client names.
+The clients are not named here. 24 of the 278 store-tagged library files (8.6%) are in tier 1 by a vendor string
+alone, the other 254 by store names in their tags, so tier 1 can be rebuilt from this description for 91% of its
+files.
 
 **Corroborating signs:**
 - matched to the release at import by exact match, by ISRC tag or by the audio of the release (audio identity);
