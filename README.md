@@ -73,7 +73,8 @@ oggenc. lossprint flags at p ≥ 0.5, flaccheck flags on `TRANSCODED`.
 From these results follows a combined rule: a spectrum verdict of lossy always stands; otherwise lossprint p ≥ 0.9 is
 lossy and 0.5–0.9 doubtful. Echolot uses this rule since 0.12.0.
 
-All numbers with n and Wilson 95% intervals: [docs/results.md](docs/results.md).
+All numbers with n and Wilson 95% intervals: [docs/results.md](docs/results.md). Other tools (FLAC Detective, fakeflac, auCDtect,
+Lossless Audio Checker, Fakin' The Funk and more) and why they were left out: [docs/other-tools.md](docs/other-tools.md).
 
 ## Contents
 
@@ -84,6 +85,7 @@ All numbers with n and Wilson 95% intervals: [docs/results.md](docs/results.md).
 | [docs/reproducing.md](docs/reproducing.md) | Re-analysis from the published data; re-measurement on another library |
 | [docs/data.md](docs/data.md) | Data dictionary of every file in `corpus/` and `results/`, with checksums |
 | `docs/figures/` | The charts, made by `scripts/figures.py` from the analysis output |
+| [docs/other-tools.md](docs/other-tools.md) | Other detection tools and research, why they were not benchmarked, a short test of FLAC Detective |
 | [TOOLS.md](TOOLS.md) | Setup, invocation and output formats of lossprint and flaccheck |
 | [report/](report/) | Groundwork for a written report |
 | `scripts/` | Measurement, analysis, experiments and independent verification (`scripts/verify/`) |
